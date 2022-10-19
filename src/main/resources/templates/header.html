@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<body>
+  <div th:fragment="copy">
+    <form th:action="@{/logout}" method="post">
+      <input type="submit" value="Sign Out"/>
+    </form>
+    <br>
+  </div>
+</body>
+</html>

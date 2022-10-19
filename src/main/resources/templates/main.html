@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<header>
+    <div th:insert="header :: copy"></div>
+    <h2> All users</h2>
+</header>
+<body>
+<div>
+    <table>
+        <tr>
+            <th>username</th>
+            <th>password</th>
+            <th>age</th>
+            <th>e-mail</th>
+            <th>ROLE</th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.username}"></td>
+            <td th:text="${user.password}"></td>
+            <td th:text="${user.age}"></td>
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.roles}"></td>
+            <td>
+                <form method="get" th:action="@{/admin/update-user/{id} (id=${user.id})}">
+                    <input type="submit" value="Update"/>
+                </form>
+<!--                <a th:href="@{/admin/update-user/{id} (id=${user.id})}">Update</a>-->
+            </td>
+            <td>
+                <form method="get" th:action="@{/admin/delete-user/{id} (id=${user.id})}">
+                    <input type="submit" value="Delete"/>
+                </form>
+<!--                <a th:href="@{/admin/delete-user/{id} (id=${user.id})}">Delete</a>-->
+            </td>
+        </tr>
+    </table>
+</div>
+<div>
+    <input type="button" value="Add new user"
+           onclick="window.location.href = 'admin/registration-user/'"/>
+</div>
+</body>
+
+</html>
