@@ -33,7 +33,7 @@
 <!--                <a th:href="@{/admin/update-user/{id} (id=${user.id})}">Update</a>-->
             </td>
             <td>
-                <form method="get" th:action="@{/admin/delete-user/{id} (id=${user.id})}">
+                <form th:method="DELETE" th:action="@{/admin/delete-user/{id} (id=${user.id})}">
                     <input type="submit" value="Delete"/>
                 </form>
 <!--                <a th:href="@{/admin/delete-user/{id} (id=${user.id})}">Delete</a>-->

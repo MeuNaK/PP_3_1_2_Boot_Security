@@ -1,6 +1,7 @@
 package ru.kata.spring.boot_security.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
@@ -42,6 +43,20 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void removeUser(int id) {
         userRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public void update(int id, User user) {
+        User userToUpdate = userRepository.findById(id).orElseThrow( () -> new RuntimeException("User not found!"));
+
+        userToUpdate.setUsername(user.getUsername());
+        userToUpdate.setPassword(user.getPassword());
+        userToUpdate.setAge(user.getAge());
+        userToUpdate.setEmail(user.getEmail());
+        userToUpdate.setRoles(user.getRoles());
+
+        userRepository.save(userToUpdate);
     }
 
 }

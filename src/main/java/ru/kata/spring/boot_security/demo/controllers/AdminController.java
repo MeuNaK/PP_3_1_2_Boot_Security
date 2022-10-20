@@ -46,15 +46,23 @@ public class AdminController {
     }
 
     @GetMapping("/update-user/{id}")
-    public String updateUser(@PathVariable("id") int id, Model model) {
+    public String editUser(@PathVariable("id") int id, Model model) {
 
         User user = userService.getUser(id);
-        model.addAttribute("newUser", user);
+        model.addAttribute("editUser", user);
         Set<Role> roleSet =  roleService.getSetRole();
         model.addAttribute("setRoles", roleSet );
         System.out.println(user.getRoles());
 
-        return "registration-user";
+        return "update-user";
+    }
+
+    @PatchMapping("/{id}")
+    public String updateUser(@ModelAttribute("editUser") User user,@PathVariable("id") int id) {
+
+        userService.update(id, user);
+
+        return "redirect:/admin";
     }
 
     @PostMapping()
@@ -65,7 +73,7 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @GetMapping("/delete-user/{id}")
+    @DeleteMapping("/delete-user/{id}")
     public String deleteUser(@PathVariable("id") int id) {
 
         userService.removeUser(id);
