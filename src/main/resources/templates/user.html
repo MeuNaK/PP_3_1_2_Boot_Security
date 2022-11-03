@@ -1,11 +1,82 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Hello World!</title>
+  <meta charset="UTF-8">
+  <title>Admin panel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
 </head>
-
 <body>
-    <div th:insert="header :: copy"></div>
-<h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+<!-- панель навигации -->
+<nav class="navbar navbar-dark bg-dark">
+
+  <a class="navbar-brand text-white"
+     th:utext="'<b>'+${authUser.email}+'</b> with roles: '+${authUser.getRoles()}+''"></a>
+  <form class="form-inline" th:action="@{/logout}" method="get">
+    <button type="submit" class="btn btn-dark text-secondary">
+      Logout
+    </button>
+  </form>
+</nav>
+
+<div class="container-fluid bg-light">
+  <div class="row ">
+    <!--  кнопки слева ADMIN, USER  -->
+    <div class="col bg-white">
+      <div class="nav flex-column nav-pills">
+        <a class="nav-link active" th:href="@{/user}" role="tab" th:utext="User"></a>
+      </div>
+    </div>
+    <!--  контейнер со вкладками  -->
+    <div class="col-10 bg-light">
+      <h2>User information-page</h2>
+      <!-- Инормаци о пользователе -->
+      <div class="tab-content .bg-secondary">
+        <!--     вкладка таблицы       -->
+        <div class="tab-pane active">
+          <div class="card">
+            <div class="card-header">
+              <h5>About user</h5>
+            </div>
+            <br>
+            <div class="container-fluid">
+              <table class="table table-hover">
+                <thread>
+                  <tr>
+                    <th>ID</th>
+                    <th>USERNAME</th>
+                    <th>AGE</th>
+                    <th>EMAIL</th>
+                    <th>ROLE</th>
+                  </tr>
+                </thread>
+                <tbody>
+                <tr>
+                  <td th:text="${authUser.getId()}"/>
+                  <td th:text="${authUser.getUsername()}"/>
+                  <td th:text="${authUser.getAge()}"/>
+                  <td th:text="${authUser.getEmail()}"/>
+                  <td th:text="${authUser.getRoles()}"/>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 </body>
 </html>

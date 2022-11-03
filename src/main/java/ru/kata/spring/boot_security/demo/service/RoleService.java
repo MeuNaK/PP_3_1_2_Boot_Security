@@ -8,4 +8,6 @@ public interface RoleService {
 
     void addRole(Role role);
     Set<Role> getSetRole();
+
+    Role findById(int id);
 }
