@@ -37,11 +37,16 @@ public class UserDBInit {
         set1.add(role1);
         Set<Role> set2 = new HashSet<>(1);
         set2.add(role2);
+        Set<Role> set3 = new HashSet<>(2);
+        set3.add(role1);
+        set3.add(role2);
 
         User user1 = new User(1, "admin", "admin", 999,  "admin@email.com",  set1 );
         User user2 = new User(2, "test", "pass", 20,  "test@email.com", set2 );
+        User user3 = new User(3, "test1", "pass1", 20,  "test1@email.com", set3 );
 
         userService.addUser(user1);
         userService.addUser(user2);
+        userService.addUser(user3);
     }
 }

@@ -44,28 +44,6 @@ public class AdminController {
         return "main";
     }
 
-//    @GetMapping("/registration-user")
-//    public String addUser(Model model) {
-//
-//        User user = new User();
-//        model.addAttribute("newUser", user);
-//        Set<Role> roleSet =  roleService.getSetRole();
-//        model.addAttribute("setRoles", roleSet );
-//
-//        return "registration-user";
-//    }
-
-//    @GetMapping("/update-user/{id}")
-//    public String editUser(@PathVariable("id") int id, Model model) {
-//
-//        User user = userService.getUser(id);
-//        model.addAttribute("editUser", user);
-//        Set<Role> roleSet =  roleService.getSetRole();
-//        model.addAttribute("setRoles", roleSet );
-//        System.out.println(user.getRoles());
-//
-//        return "update-user";
-//    }
 
     @PatchMapping("/{id}")
     public String updateUser(@ModelAttribute("user") User user, @PathVariable("id") int id, int[] rolesID) {
