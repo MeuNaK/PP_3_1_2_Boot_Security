@@ -235,33 +235,34 @@
                             <br>
                             <form th:action="@{/admin/user-save}" th:object="${newUser}" method="post">
                                 <div class="form-group">
-                                    <label for="username">Enter username</label>
-                                    <input type="text" class="form-control" name="username" id="username"
-                                           placeholder="username">
+                                    <label for="usernameNew">Enter username</label>
+                                    <input type="text" class="form-control"
+                                           th:value="*{username}" id="usernameNew"
+                                           th:name="username">
                                 </div>
                                 <div class="form-group">
-                                    <label for="surname">Enter surname</label>
-                                    <input type="text" class="form-control" name="surname" id="surname"
-                                           placeholder="surname">
+                                <label for="password">Enter password</label>
+                                <input type="text" class="form-control"
+                                       th:value="*{password}" id="password"
+                                       th:name="password">
                                 </div>
                                 <div class="form-group">
                                     <label for="age">Enter age</label>
-                                    <input type="number" class="form-control" name="age" id="age" placeholder="age">
+                                    <input type="text" class="form-control"
+                                           th:value="*{age}" id="age"
+                                           th:name="age">
                                 </div>
-                                <div class="form-group">
-                                    <label for="password">Enter password</label>
-                                    <input type="text" class="form-control" name="password" id="password"
-                                           placeholder="password">
-                                </div>
+
                                 <div class="form-group">
                                     <label for="email">Enter email</label>
-                                    <input type="text" class="form-control" name="email" id="email" placeholder="email">
+                                    <input type="text" class="form-control"
+                                           th:value="*{email}" id="email"
+                                           th:name="email">
                                 </div>
-                                <label for="roles-new"><b>Role</b></label>
-                                <select multiple class="form-control form-control-sm" id="roles-new" name="listRoles"
-                                        size="2" required>
-                                    <option selected="selected" value="1">ADMIN</option>
-                                    <option value="2">USER</option>
+                                <label for="roles"><b>Role</b></label>
+                                <select multiple class="form-control form-control-sm" id="roles" name="rolesNewID"
+                                        size="2">
+                                    <option th:each="role : ${setRoles}" th:value="${role.id}" th:text="${role.name}"></option>
                                 </select>
 
                                 <button type="submit" class="btn btn-success btn-lg">

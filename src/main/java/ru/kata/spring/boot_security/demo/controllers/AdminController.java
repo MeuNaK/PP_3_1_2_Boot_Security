@@ -38,7 +38,7 @@ public class AdminController {
         User newUser = new User();
         model.addAttribute("newUser", newUser);
 
-        Set<Role> roleSet = new HashSet<>(roleService.getSetRole());
+        Set<Role> roleSet = new HashSet<>(roleService.getSetRoles());
         model.addAttribute("setRoles", roleSet);
 
         return "main";
@@ -80,9 +80,9 @@ public class AdminController {
     }
 
     @PostMapping("/user-save")
-    public String create(@ModelAttribute("newUser") User user, int[] rolesID) {
-        Set<Role> RoleList = new HashSet<>(rolesID.length);
-        for (int i : rolesID) {
+    public String create(@ModelAttribute("newUser") User user, int[] rolesNewID) {
+        Set<Role> RoleList = new HashSet<>(rolesNewID.length);
+        for (int i : rolesNewID) {
             RoleList.add(roleService.findById(i));
         }
         user.setRoles(RoleList);
