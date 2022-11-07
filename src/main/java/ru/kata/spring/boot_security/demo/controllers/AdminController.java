@@ -38,34 +38,12 @@ public class AdminController {
         User newUser = new User();
         model.addAttribute("newUser", newUser);
 
-        Set<Role> roleSet = new HashSet<>(roleService.getSetRole());
+        Set<Role> roleSet = roleService.getSetRole();
         model.addAttribute("setRoles", roleSet);
 
         return "main";
     }
 
-//    @GetMapping("/registration-user")
-//    public String addUser(Model model) {
-//
-//        User user = new User();
-//        model.addAttribute("newUser", user);
-//        Set<Role> roleSet =  roleService.getSetRole();
-//        model.addAttribute("setRoles", roleSet );
-//
-//        return "registration-user";
-//    }
-
-//    @GetMapping("/update-user/{id}")
-//    public String editUser(@PathVariable("id") int id, Model model) {
-//
-//        User user = userService.getUser(id);
-//        model.addAttribute("editUser", user);
-//        Set<Role> roleSet =  roleService.getSetRole();
-//        model.addAttribute("setRoles", roleSet );
-//        System.out.println(user.getRoles());
-//
-//        return "update-user";
-//    }
 
     @PatchMapping("/{id}")
     public String updateUser(@ModelAttribute("user") User user, @PathVariable("id") int id, int[] rolesID) {
@@ -80,9 +58,9 @@ public class AdminController {
     }
 
     @PostMapping("/user-save")
-    public String create(@ModelAttribute("newUser") User user, int[] rolesID) {
-        Set<Role> RoleList = new HashSet<>(rolesID.length);
-        for (int i : rolesID) {
+    public String create(@ModelAttribute("newUser") User user, int[] rolesNewID) {
+        Set<Role> RoleList = new HashSet<>(rolesNewID.length);
+        for (int i : rolesNewID) {
             RoleList.add(roleService.findById(i));
         }
         user.setRoles(RoleList);
