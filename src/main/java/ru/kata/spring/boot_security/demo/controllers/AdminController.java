@@ -32,48 +32,6 @@ public class AdminController {
         User authUser = userService.getUserByUsername(principal.getName());
         model.addAttribute("authUser", authUser);
 
-        List<User> users = userService.getAllUsers();
-        model.addAttribute("users", users);
-
-        User newUser = new User();
-        model.addAttribute("newUser", newUser);
-
-        Set<Role> roleSet = new HashSet<>(roleService.getSetRoles());
-        model.addAttribute("setRoles", roleSet);
-
         return "main";
-    }
-
-
-    @PatchMapping("/{id}")
-    public String updateUser(@ModelAttribute("user") User user, @PathVariable("id") int id, int[] rolesID) {
-        Set<Role> RoleList = new HashSet<>(rolesID.length);
-        for (int i : rolesID) {
-            RoleList.add(roleService.findById(i));
-        }
-        user.setRoles(RoleList);
-        userService.update(id, user);
-
-        return "redirect:/admin";
-    }
-
-    @PostMapping("/user-save")
-    public String create(@ModelAttribute("newUser") User user, int[] rolesNewID) {
-        Set<Role> RoleList = new HashSet<>(rolesNewID.length);
-        for (int i : rolesNewID) {
-            RoleList.add(roleService.findById(i));
-        }
-        user.setRoles(RoleList);
-        userService.addUser(user);
-
-        return "redirect:/admin";
-    }
-
-    @DeleteMapping("/delete-user/{id}")
-    public String deleteUser(@PathVariable("id") int id) {
-
-        userService.removeUser(id);
-
-        return "redirect:/admin";
     }
 }

@@ -3,10 +3,24 @@ const urlRoles = 'http://localhost:8080/api/roles/';
 
 let rolesArr = [];
 
-// var editModal = new bootstrap.Modal(document.getElementById('editModal'));
-// var delModal = new bootstrap.Modal(document.getElementById('delModal'));
-
 window.addEventListener("DOMContentLoaded", () => {
+    const formForNewUser = document.querySelector(".form_for_new_user");
+    const newRoles = document.getElementById("rolesNew");
+
+    const formForUpdateUser = document.querySelector(".form_for_update_user");
+    const editRoles = document.getElementById("rolesEdit");
+    const idEdit = document.getElementById('idEdit');
+    const usernameEdit = document.getElementById('usernameEdit');
+    const passwordEdit = document.getElementById('passwordEdit');
+    const ageEdit = document.getElementById('ageEdit');
+    const emailEdit = document.getElementById('emailEdit');
+
+    const formForDelUser = document.querySelector(".form_for_delete_user");
+    const idDel = document.getElementById('idDel');
+    const usernameDel = document.getElementById('usernameDel');
+    const passwordDel = document.getElementById('passwordDel');
+    const ageDel = document.getElementById('ageDel');
+    const emailDel = document.getElementById('emailDel');
 
     /*** Вывод всех пользователей из БД в таблицу через метод get ***/
 
@@ -64,13 +78,15 @@ window.addEventListener("DOMContentLoaded", () => {
     function showAllRoles() {
         getResource(urlRoles)
             .then(data => createOption(data))
-            .then(roles => roles.forEach(role => rolesArr.push(role)))
             .catch(err => console.error(err));
+        console.log(rolesArr);
     }
 
     showAllRoles();
 
     function createOption(response) {
+        response.forEach(role => rolesArr.push(role));
+
         document.querySelectorAll('.role_select').forEach(selector => {
             response.forEach(role => {
                 let option = document.createElement('option');
@@ -78,16 +94,12 @@ window.addEventListener("DOMContentLoaded", () => {
                 option.text = role.name.slice(5);
 
                 selector.appendChild(option);
-
             });
         });
     }
 
 
     /*** Добавление в бд нового пользователя через метод post ***/
-
-    const formForNewUser = document.querySelector(".form_for_new_user");
-    const newRoles =  document.getElementById("rolesNew");
 
     function addNewUser(e) {
         e.preventDefault();
@@ -104,15 +116,14 @@ window.addEventListener("DOMContentLoaded", () => {
             }
         );
 
-
         let formData = new FormData(formForNewUser);
 
         let obj = {};
         formData.forEach((value, key) => {
             obj[key] = value;
         });
+
         obj.roles = rolesJ;
-        console.log(obj.roles);
 
         postResource(urlUser, obj)
             .catch(err => console.error(err));
@@ -157,27 +168,24 @@ window.addEventListener("DOMContentLoaded", () => {
 
     function updateEditModal(user) {
         console.log(user);
-        document.getElementById('idEdit').value = user.id;
-        document.getElementById('nameEdit').value = user.username;
-        document.getElementById('passwordEdit').value = user.password;
-        document.getElementById('ageEdit').value = user.age;
-        document.getElementById('emailEdit').value = user.email;
+        idEdit.value = user.id;
+        usernameEdit.value = user.username;
+        passwordEdit.value = user.password;
+        ageEdit.value = user.age;
+        emailEdit.value = user.email;
     }
-
 
     function updateDelModal(user) {
         console.log(user);
-        document.getElementById('idDel').value = user.id;
-        document.getElementById('usernameDel').value = user.username;
-        document.getElementById('passwordDel').value = user.password;
-        document.getElementById('ageDel').value = user.age;
-        document.getElementById('emailDel').value = user.email;
+        idDel.value = user.id;
+        usernameDel.value = user.username;
+        passwordDel.value = user.password;
+        ageDel.value = user.age;
+        emailDel.value = user.email;
     }
 
 
     /*** Удаление пользователя через метод DELETE ***/
-
-    const formForDelUser = document.querySelector(".form_for_delete_user");
 
     function delUser(e) {
         e.preventDefault();
@@ -220,10 +228,20 @@ window.addEventListener("DOMContentLoaded", () => {
 
     /*** Изминение пользователя через метод PATCH ***/
 
-    const formForUpdateUser = document.querySelector(".form_for_update_user");
-
     function updateUser(e) {
         e.preventDefault();
+
+        let rolesJ = [];
+
+        const selectedOpts = [...editRoles.options]
+            .filter(x => x.selected)
+            .map(x => x.value);
+
+        selectedOpts.forEach(
+            role => {
+                rolesJ.push(rolesArr[role - 1])
+            }
+        );
 
         let formData = new FormData(formForUpdateUser);
 
@@ -231,7 +249,7 @@ window.addEventListener("DOMContentLoaded", () => {
         formData.forEach((value, key) => {
             obj[key] = value;
         });
-        console.log(obj);
+        obj.roles = rolesJ;
 
         patchResource(urlUser, obj)
             .catch(err => console.error(err));

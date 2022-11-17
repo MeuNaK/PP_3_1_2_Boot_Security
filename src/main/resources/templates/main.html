@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Admin panel</title>
@@ -61,7 +61,6 @@
                         <br>
                         <div class="container-fluid">
                             <table class="table table-hover">
-                                <thread>
                                     <tr>
                                         <th>ID</th>
                                         <th>USERNAME</th>
@@ -71,7 +70,6 @@
                                         <th>EDIT</th>
                                         <th>DELETE</th>
                                     </tr>
-                                </thread>
                                 <tbody class="usersTbody">
                                 </tbody>
                             </table>
@@ -98,9 +96,9 @@
                                                                id="idEdit" name="id" readonly>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="nameEdit">Username</label>
+                                                        <label for="usernameEdit">Username</label>
                                                         <input type="text" class="form-control"
-                                                               id="nameEdit" name="username">
+                                                               id="usernameEdit" name="username">
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="ageEdit">Age</label>
