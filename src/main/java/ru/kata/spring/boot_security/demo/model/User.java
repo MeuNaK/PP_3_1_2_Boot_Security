@@ -6,7 +6,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "user")
-public class User{
+public class User {
 
     @Id
     @Column(name = "id")
@@ -55,6 +55,7 @@ public class User{
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
     public int getId() {
         return id;
     }
@@ -93,5 +94,17 @@ public class User{
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", age=" + age +
+                ", email='" + email + '\'' +
+                ", roles=" + roles +
+                '}';
     }
 }

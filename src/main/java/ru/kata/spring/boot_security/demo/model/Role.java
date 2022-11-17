@@ -14,7 +14,7 @@ public class Role implements GrantedAuthority {
     @Column(name = "id")
     private int id;
 
-    @Column(name =  "name")
+    @Column(name = "name")
     private String name;
 
     @Transient
@@ -28,7 +28,6 @@ public class Role implements GrantedAuthority {
         this.id = id;
         this.name = name;
     }
-
 
 
     public int getId() {

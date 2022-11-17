@@ -11,6 +11,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.web.filter.CharacterEncodingFilter;
 import ru.kata.spring.boot_security.demo.security.UserDetailsServiceImpl;
 
 @Configuration
@@ -28,12 +30,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     // Настройка аутентификации
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests()
-
-                .antMatchers("/", "/index", "/api/**").permitAll() // пути "/" и "/index" настроены так, чтобы не требовать аутентификации.
+        http.csrf().disable();
+        http.authorizeRequests()
+                .antMatchers("/", "/index", "/test/**").permitAll() // пути "/" и "/index" настроены так, чтобы не требовать аутентификации.
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/user").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/api/users/**").access("hasAnyRole('ROLE_ADMIN')")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().successHandler(successUserHandler)
@@ -41,6 +43,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .permitAll();
+
+
     }
 
 
@@ -53,7 +57,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 
 
 }

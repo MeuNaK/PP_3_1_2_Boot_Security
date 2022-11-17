@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void update(int id, User user) {
-        User userToUpdate = userRepository.findById(id).orElseThrow( () -> new RuntimeException("User not found!"));
+        User userToUpdate = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found!"));
 
         userToUpdate.setUsername(user.getUsername());
         userToUpdate.setPassword(user.getPassword());
