@@ -6,6 +6,7 @@ let rolesArr = [];
 window.addEventListener("DOMContentLoaded", () => {
     const formForNewUser = document.querySelector(".form_for_new_user");
     const newRoles = document.getElementById("rolesNew");
+    const userTbody = document.querySelector('.usersTbody')
 
     const formForUpdateUser = document.querySelector(".form_for_update_user");
     const editRoles = document.getElementById("rolesEdit");
@@ -15,6 +16,7 @@ window.addEventListener("DOMContentLoaded", () => {
     const ageEdit = document.getElementById('ageEdit');
     const emailEdit = document.getElementById('emailEdit');
 
+    const delModal = document.getElementById("delModal");
     const formForDelUser = document.querySelector(".form_for_delete_user");
     const idDel = document.getElementById('idDel');
     const usernameDel = document.getElementById('usernameDel');
@@ -69,8 +71,14 @@ window.addEventListener("DOMContentLoaded", () => {
                         </td>
                         <td></td>
                     `;
-            document.querySelector('.usersTbody').appendChild(table);
+
+            userTbody.appendChild(table);
         });
+    }
+
+    function updateTable() {
+        userTbody.innerHTML = '';
+        showAllUsers();
     }
 
     /*** Вывод всех ролей из БД в таблицу через метод get ***/
@@ -126,7 +134,8 @@ window.addEventListener("DOMContentLoaded", () => {
         obj.roles = rolesJ;
 
         postResource(urlUser, obj)
-            .catch(err => console.error(err));
+            .catch(err => console.error(err))
+            .then(updateTable);
     }
 
     formForNewUser.addEventListener("submit", (e) => addNewUser(e));
@@ -204,10 +213,11 @@ window.addEventListener("DOMContentLoaded", () => {
         console.log(obj.roles);
 
         delResource(urlUser + obj.id, obj)
-            .catch(err => console.error(err));
+            .catch(err => console.error(err))
+            .then(updateTable);
     }
 
-    formForDelUser.addEventListener("submit", (e) => delUser(e), {"once": true});
+    formForDelUser.addEventListener("submit", (e) => delUser(e));
 
     async function delResource(url, data) {
         const res = await fetch(`${url}`, {
@@ -252,7 +262,8 @@ window.addEventListener("DOMContentLoaded", () => {
         obj.roles = rolesJ;
 
         patchResource(urlUser, obj)
-            .catch(err => console.error(err));
+            .catch(err => console.error(err))
+            .then(updateTable);
     }
 
     formForUpdateUser.addEventListener("submit", (e) => updateUser(e));

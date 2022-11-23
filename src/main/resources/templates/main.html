@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Admin panel</title>
@@ -26,8 +26,8 @@
         <!--  кнопки слева ADMIN, USER  -->
         <div class="col bg-white">
             <div class="nav flex-column nav-pills">
-                <a class="nav-link active" th:href="@{/admin}" role="tab" th:utext="Admin"></a>
-                <a class="nav-link" th:href="@{/user}" role="tab" th:utext="User"></a>
+                <a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link active" th:href="@{/admin}" role="tab" th:utext="Admin"></a>
+                <a sec:authorize="hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')"class="nav-link" th:href="@{/user}" role="tab" th:utext="User"></a>
             </div>
         </div>
         <!--  контейнер со вкладками  -->

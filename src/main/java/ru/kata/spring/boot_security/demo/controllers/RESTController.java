@@ -8,7 +8,6 @@ import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
-import ru.kata.spring.boot_security.demo.util.REST_Exeption.UserNotExistException;
 
 import java.util.List;
 import java.util.Set;
@@ -87,4 +86,6 @@ public class RESTController {
         userService.removeUser(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+
 }
